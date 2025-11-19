@@ -6,7 +6,7 @@ import { productsAPI, invoicesAPI, customersAPI } from '../api';
 export const BillingPage = () => {
   const { currentBusiness } = useBusinessStore();
   const { user } = useAuthStore();
-  const { items, addItem, removeItem, updateQuantity, getTotal, clearCart } = useCartStore();
+  const { items, addItem, removeItem, updateQuantity, updatePrice, getTotal, clearCart } = useCartStore();
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -24,6 +24,7 @@ export const BillingPage = () => {
   });
   const [paymentStatus, setPaymentStatus] = useState('unpaid');
   const [paymentMethodForInvoice, setPaymentMethodForInvoice] = useState('cash');
+  const [editingPrice, setEditingPrice] = useState(null);
 
   useEffect(() => {
     loadProducts();
@@ -259,7 +260,29 @@ export const BillingPage = () => {
                     <div className="flex justify-between items-start mb-2">
                       <div>
                         <p className="font-semibold text-sm">{item.product_name}</p>
-                        <p className="text-xs text-gray-500">₹{item.unit_price}</p>
+                        {editingPrice === item.product_id ? (
+                          <input
+                            type="number"
+                            step="0.01"
+                            value={item.unit_price}
+                            onChange={(e) => updatePrice(item.product_id, e.target.value)}
+                            onBlur={() => setEditingPrice(null)}
+                            onKeyPress={(e) => {
+                              if (e.key === 'Enter') {
+                                setEditingPrice(null);
+                              }
+                            }}
+                            className="input w-20 py-1 text-xs"
+                            autoFocus
+                          />
+                        ) : (
+                          <p 
+                            onClick={() => setEditingPrice(item.product_id)}
+                            className="text-xs text-gray-500 cursor-pointer hover:text-primary transition-colors"
+                          >
+                            ₹{item.unit_price.toFixed(2)} (click to edit)
+                          </p>
+                        )}
                       </div>
                       <button
                         onClick={() => removeItem(item.product_id)}

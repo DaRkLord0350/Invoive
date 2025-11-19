@@ -86,6 +86,13 @@ export const useCartStore = create((set, get) => ({
     });
   },
 
+  updatePrice: (productId, newPrice) => {
+    set({
+      items: get().items.map(item =>
+        item.product_id === productId ? { ...item, unit_price: parseFloat(newPrice) || 0 } : item
+      )
+    });
+  },
   setDiscount: (discount) => set({ discount }),
 
   clearCart: () => set({ items: [], discount: 0 }),
