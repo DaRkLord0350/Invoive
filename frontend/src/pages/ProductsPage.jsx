@@ -383,26 +383,15 @@ export const ProductsPage = () => {
 
       {/* Search and Filter */}
       <div className="card space-y-4">
-        <div className="flex flex-col sm:flex-row gap-4">
-          <div className="flex-1 relative">
-            <Search className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
-            <input
-              type="text"
-              placeholder="Search by name or SKU..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="input pl-10"
-            />
-          </div>
-          <select
-            value={filter}
-            onChange={(e) => setFilter(e.target.value)}
-            className="input"
-          >
-            <option value="all">All Products</option>
-            <option value="low">Low Stock</option>
-            <option value="high">In Stock</option>
-          </select>
+        <div className="flex-1 relative">
+          <Search className="absolute left-4 top-4 w-6 h-6 text-gray-400" />
+          <input
+            type="text"
+            placeholder="Search by name or SKU..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="input pl-14 py-3 text-lg w-full"
+          />
         </div>
       </div>
 

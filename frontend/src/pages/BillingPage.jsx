@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ShoppingCart, Trash2, Plus, Minus, AlertCircle } from 'lucide-react';
+import { ShoppingCart, Trash2, Plus, Minus, AlertCircle, Search } from 'lucide-react';
 import { useBusinessStore, useCartStore, useAuthStore } from '../store';
 import { productsAPI, invoicesAPI, customersAPI } from '../api';
 
@@ -8,6 +8,8 @@ export const BillingPage = () => {
   const { user } = useAuthStore();
   const { items, addItem, removeItem, updateQuantity, getTotal, clearCart } = useCartStore();
   const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
   const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [paymentMethod, setPaymentMethod] = useState('cash');
   const [loading, setLoading] = useState(false);
@@ -26,6 +28,20 @@ export const BillingPage = () => {
   useEffect(() => {
     loadProducts();
   }, []);
+
+  useEffect(() => {
+    // Filter products based on search term
+    if (searchTerm.trim()) {
+      const filtered = products.filter(product => 
+        product.product_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        product.sku.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFilteredProducts(filtered);
+    } else {
+      setFilteredProducts(products);
+    }
+  }, [searchTerm, products]);
+
 
   const loadProducts = async () => {
     setLoading(true);
@@ -162,6 +178,20 @@ export const BillingPage = () => {
             <h2 className="text-xl font-semibold text-secondary dark:text-light mb-4">
               Select Products
             </h2>
+
+            {/* Search Bar */}
+            <div className="mb-4 relative">
+              <Search className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+              <input
+                type="text"
+                placeholder="Search by product name or SKU..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="input pl-10 w-full"
+              />
+            </div>
+
+
             {loading ? (
               <div className="text-center py-8">
                 <p className="text-gray-500">Loading products...</p>
@@ -177,9 +207,14 @@ export const BillingPage = () => {
               <div className="text-center py-8">
                 <p className="text-gray-500">No products available. Create products first.</p>
               </div>
-            ) : (
+            ) : filteredProducts.length === 0 ? (
+              <div className="text-center py-8">
+                <p className="text-gray-500">No products found matching "{searchTerm}".</p>
+              </div>
+              ) : (
               <div className="space-y-2 max-h-96 overflow-y-auto">
-                {products.map(product => (
+                {filteredProducts.map(product => (
+                  
                   <div
                     key={product.id}
                     className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg"
