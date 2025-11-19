@@ -33,7 +33,9 @@ def get_sales_summary(
         business_id = business.id
     
     # Determine date range
-    now = datetime.utcnow()
+       IST = timezone(timedelta(hours=5, 30))
+    now = datetime.now(IST)
+
     if period == "daily":
         start_date = now.replace(hour=0, minute=0, second=0, microsecond=0)
         end_date = start_date + timedelta(days=1)
