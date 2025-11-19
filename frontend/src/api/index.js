@@ -2,7 +2,7 @@ import api from './client';
 
 // Auth APIs
 export const authAPI = {
-  signup: (data) => api.post('/auth/signup', data),
+  signup: (data) => api.post('api/auth/signup', data),
   login: (email, password) => api.post('/auth/login', new URLSearchParams({ username: email, password }), {
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
   }),
