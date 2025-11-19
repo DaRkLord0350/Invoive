@@ -38,9 +38,9 @@ export const customersAPI = {
   get: (id) => api.get(`api/customers/${id}`).then(res => res.data),
   create: (data) => api.post(`api/customers/`, data).then(res => res.data),
   update: (id, data) => api.put(`api/customers/${id}`, data).then(res => res.data),
-  block: (id) => api.post(`api/customers/${id}api/block`).then(res => res.data),
-  unblock: (id) => api.post(`api/customers/${id}api/unblock`).then(res => res.data),
-  getInvoices: (id) => api.get(`api/customers/${id}api/invoices`).then(res => res.data),
+  block: (id) => api.post(`api/customers/${id}/block`).then(res => res.data),
+  unblock: (id) => api.post(`api/customers/${id}/unblock`).then(res => res.data),
+  getInvoices: (id) => api.get(`api/customers/${id}/invoices`).then(res => res.data),
 };
 
 // Invoices APIs
@@ -50,8 +50,8 @@ export const invoicesAPI = {
   create: (data) => api.post(`api/invoices/`, data).then(res => res.data),
   update: (id, data) => api.put(`api/invoices/${id}`, data).then(res => res.data),
   delete: (id) => api.delete(`api/invoices/${id}`).then(res => res.data),
-  addPayment: (id, payment) => api.post(`api/invoices/${id}api/payment`, payment).then(res => res.data),
-  getPayments: (id) => api.get(`api/invoices/${id}api/payments`).then(res => res.data),
+  addPayment: (id, payment) => api.post(`api/invoices/${id}/payment`, payment).then(res => res.data),
+  getPayments: (id) => api.get(`api/invoices/${id}/payments`).then(res => res.data),
   downloadPDF: (id) => api.get(`api/invoices/${id}/pdf`, { responseType: 'blob' }),
 };
 
