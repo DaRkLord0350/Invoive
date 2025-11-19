@@ -10,10 +10,7 @@ import os
 # Create tables
 Base.metadata.create_all(bind=engine)
 
-#get routes
-@app.get("/__routes__")
-def list_routes():
-    return [{"path": r.path, "methods": list(r.methods)} for r in app.routes]
+
 
 # Initialize FastAPI app
 app = FastAPI(
@@ -55,6 +52,11 @@ app.include_router(businesses.router)
 @app.get("/health", tags=["Health"])
 async def health_check():
     return {"status": "healthy", "service": "Invoice Management API"}
+
+#get routes
+@app.get("/__routes__")
+def list_routes():
+    return [{"path": r.path, "methods": list(r.methods)} for r in app.routes]
 
 # Root endpoint
 @app.get("/", tags=["Root"])
