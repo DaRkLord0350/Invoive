@@ -12,11 +12,11 @@ export const authAPI = {
 
 // Products APIs
 export const productsAPI = {
-  list: (params = {}) => api.get(`/products/`, { params }).then(res => res.data),
-  get: (id) => api.get(`/products/${id}`).then(res => res.data),
+  list: (params = {}) => api.get(`api/products/`, { params }).then(res => res.data),
+  get: (id) => api.get(`api/products/${id}`).then(res => res.data),
   create: (data) => {
     console.log('Creating product:', data);
-    return api.post(`/products/`, data).then(res => {
+    return api.post(`api/products/`, data).then(res => {
       console.log('Product created:', res.data);
       return res.data;
     }).catch(err => {
@@ -24,12 +24,12 @@ export const productsAPI = {
       throw err;
     });
   },
-  update: (id, data) => api.put(`/products/${id}`, data).then(res => res.data),
-  delete: (id) => api.delete(`/products/${id}`).then(res => res.data),
+  update: (id, data) => api.put(`api/products/${id}`, data).then(res => res.data),
+  delete: (id) => api.delete(`api/products/${id}`).then(res => res.data),
   addStock: (id, quantity, reason = 'purchase', notes = '') => 
-    api.post(`/products/${id}/add-stock`, null, { params: { quantity, reason, notes } }).then(res => res.data),
-  getStockHistory: (id, params = {}) => api.get(`/products/${id}/stock-history`, { params }).then(res => res.data),
-  getLowStock: (limit = 5) => api.get(`/products/`, { params: { low_stock: true, limit } }).then(res => res.data),
+    api.post(`api/products/${id}api/add-stock`, null, { params: { quantity, reason, notes } }).then(res => res.data),
+  getStockHistory: (id, params = {}) => api.get(`api/products/${id}api/stock-history`, { params }).then(res => res.data),
+  getLowStock: (limit = 5) => api.get(`api/products/`, { params: { low_stock: true, limit } }).then(res => res.data),
 };
 
 // Customers APIs
