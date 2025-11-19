@@ -22,21 +22,16 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        "https://invoive-alpha.vercel.app",
+        "http://localhost:3000",
+        "http://localhost:5173",
+        "http://localhost:8000",
+    ],
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allow_headers=["*"],
 )
-
-
-# Add CORS middleware
-#app.add_middleware(
-#    CORSMiddleware,
-#    allow_origins=settings.CORS_ORIGINS,
-#    allow_credentials=True,
-#    allow_methods=["*"],
-#    allow_headers=["*"],
-#)
 # Add GZIP middleware for response compression
 app.add_middleware(GZipMiddleware, minimum_size=1000)
 
