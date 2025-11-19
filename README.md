@@ -1,6 +1,6 @@
 # Invoice Management System - Complete Guide
 
-A comprehensive **Billing & Inventory Management System** built with React.js and FastAPI. This system helps shop owners and employees manage products, inventory, billing, customers, and sales reports with ease.
+A comprehensive **Billing & Inventory Management System** built with React.js and FastAPI. This system helps shop owners and employees manage products, inventory, billing, customers, and sales reports with ease. 2
 
 ## 📋 Features Overview
 
