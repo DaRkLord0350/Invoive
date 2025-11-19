@@ -58,17 +58,17 @@ export const invoicesAPI = {
 // Reports APIs
 export const reportsAPI = {
   salesSummary: (businessId, period = 'daily') => 
-    api.get(`api/reports/sales/summary`, { params: { business_id: businessId, period } }).then(res => res.data),
+    api.get(`/reports/sales/summary`, { params: { business_id: businessId, period } }).then(res => res.data),
   inventoryValue: (businessId) => 
-    api.get(`api/reports/inventory/value`, { params: { business_id: businessId } }).then(res => res.data),
+    api.get(`/reports/inventory/value`, { params: { business_id: businessId } }).then(res => res.data),
   bestsellers: (businessId, period = 'monthly', limit = 10) =>
-    api.get(`api/reports/products/bestsellers`, { params: { business_id: businessId, period, limit } }).then(res => res.data),
+    api.get(`/reports/products/bestsellers`, { params: { business_id: businessId, period, limit } }).then(res => res.data),
   topCustomers: (businessId, limit = 10) =>
-    api.get(`api/reports/customers/top`, { params: { business_id: businessId, limit } }).then(res => res.data),
+    api.get(`/reports/customers/top`, { params: { business_id: businessId, limit } }).then(res => res.data),
   outstandingPayments: (businessId) =>
-    api.get(`api/reports/payments/outstanding`, { params: { business_id: businessId } }).then(res => res.data),
+    api.get(`/reports/payments/outstanding`, { params: { business_id: businessId } }).then(res => res.data),
   taxSummary: (businessId, startDate, endDate) =>
-    api.get(`api/reports/tax/summary`, { params: { business_id: businessId, start_date: startDate, end_date: endDate } }).then(res => res.data),
+    api.get(`/reports/tax/summary`, { params: { business_id: businessId, start_date: startDate, end_date: endDate } }).then(res => res.data),
 };
 
 // Business APIs
