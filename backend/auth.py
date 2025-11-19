@@ -9,6 +9,7 @@ from database import get_db
 from sqlalchemy.orm import Session
 import models
 from schemas import TokenData
+import hashlib
 
 # Password hashing
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -16,15 +17,26 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 # OAuth2 scheme
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
+def _hash_password_with_sha256(password: str) -> str:
+    """Pre-hash password with SHA256 to ensure it never exceeds 72 bytes for bcrypt"""
+    return hashlib.sha256(password.encode()).hexdigest()
+
 def verify_password(plain_password: str, hashed_password: str) -> bool:
-    # Truncate password to 72 bytes (bcrypt limit)
-    truncated_password = plain_password[:72]
-    return pwd_context.verify(truncated_password, hashed_password)
+    # Try with SHA256 pre-hashing first (new method)
+    sha256_hash = _hash_password_with_sha256(plain_password)
+    if pwd_context.verify(sha256_hash, hashed_password):
+        return True
+    
+    # Fall back to direct verification for passwords hashed with old method
+    try:
+        return pwd_context.verify(plain_password, hashed_password)
+    except Exception:
+        return False
 
 def get_password_hash(password: str) -> str:
-    # Truncate password to 72 bytes (bcrypt limit)
-    truncated_password = password[:72]
-    return pwd_context.hash(truncated_password)
+    # Pre-hash the password with SHA256 to ensure it's within bcrypt limits
+    sha256_hash = _hash_password_with_sha256(password)
+    return pwd_context.hash(sha256_hash)
 
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     to_encode = data.copy()
