@@ -126,7 +126,8 @@ def get_bestsellers(
         business_id = business.id
     
     # Determine date range
-    now = datetime.utcnow()
+    IST = timezone(timedelta(hours=5, minutes=30))
+    now = datetime.now(IST)
     if period == "daily":
         start_date = now - timedelta(days=1)
     elif period == "weekly":
