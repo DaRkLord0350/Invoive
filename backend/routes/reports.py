@@ -6,6 +6,7 @@ from database import get_db
 import models
 from auth import get_current_active_user
 from sqlalchemy import func
+from datetime import timezone
 
 router = APIRouter(prefix="/api/reports", tags=["Reports"])
 
@@ -33,7 +34,7 @@ def get_sales_summary(
         business_id = business.id
     
     # Determine date range
-       IST = timezone(timedelta(hours=5, 30))
+    IST = timezone(timedelta(hours=5, 30))
     now = datetime.now(IST)
 
     if period == "daily":
