@@ -12,11 +12,11 @@ router = APIRouter(prefix="/api/products", tags=["Products"])
 def list_products(
     skip: int = Query(0, ge=0),
     limit: int = Query(50, le=100),
-    search: Optional[str] = None,
-    category: Optional[str] = None,
-    min_price: Optional[float] = None,
-    max_price: Optional[float] = None,
-    low_stock: Optional[bool] = None,
+    search: Optional[str] = Query(None),
+    category: Optional[str] = Query(None),
+    min_price: Optional[float] = Query(None),
+    max_price: Optional[float] = Query(None),
+    low_stock: Optional[bool] = Query(None),
     db: Session = Depends(get_db),
     current_user: models.User = Depends(get_current_active_user)
 ):
@@ -36,10 +36,12 @@ def list_products(
     
     query = db.query(models.Product).filter(models.Product.business_id == business.id)
     
-    if search:
+    # Apply search filter
+    if search and search.strip():
+        search_term = f"%{search.strip()}%"
         query = query.filter(
-            (models.Product.product_name.ilike(f"%{search}%")) |
-            (models.Product.sku.ilike(f"%{search}%"))
+            (models.Product.product_name.ilike(search_term)) |
+            (models.Product.sku.ilike(search_term))
         )
     
     if category:

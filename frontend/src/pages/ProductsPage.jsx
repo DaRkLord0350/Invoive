@@ -284,11 +284,22 @@ export const ProductsPage = () => {
     
     try {
       console.log('Fetching products with search:', searchTerm, 'filter:', filterValue);
-      const response = await productsAPI.list({
-        search: searchTerm || undefined,
-        low_stock: filterValue === 'low' ? true : undefined,
+      const params = {
         limit: 50,
-      });
+      };
+      
+      // Only add search param if it has a value
+      if (searchTerm && searchTerm.trim()) {
+        params.search = searchTerm.trim();
+      }
+      
+      // Only add low_stock filter if selected
+      if (filterValue === 'low') {
+        params.low_stock = true;
+      }
+      
+      console.log('Sending params:', params);
+      const response = await productsAPI.list(params);
       console.log('Products fetched - response type:', typeof response, 'is array:', Array.isArray(response), 'count:', response?.length);
       console.log('Raw response:', response);
       
@@ -306,19 +317,19 @@ export const ProductsPage = () => {
     }
   }, []);
 
-  // Load products on mount and when search/filter changes
+  // Load products when search/filter changes with debounce
   useEffect(() => {
     const timer = setTimeout(() => {
       loadProducts(search, filter);
     }, 300); // Debounce search
 
     return () => clearTimeout(timer);
-  }, [search, filter, loadProducts]);
+  }, [search, filter]);
 
   // Load products on component mount
   useEffect(() => {
     loadProducts('', 'all');
-  }, []);
+  }, [loadProducts]);
 
   const handleDelete = async (product) => {
     if (!product) return;
