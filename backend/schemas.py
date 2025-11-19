@@ -1,4 +1,4 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, field_validator
 from typing import List, Optional
 from datetime import datetime
 from enum import Enum
@@ -28,11 +28,30 @@ class UserBase(BaseModel):
 
 class UserCreate(UserBase):
     password: str
+    
+    @field_validator('password')
+    @classmethod
+    def validate_password_length(cls, v):
+        if len(v.encode('utf-8')) > 72:
+            raise ValueError('Password must not exceed 72 bytes')
+        if len(v) < 6:
+            raise ValueError('Password must be at least 6 characters')
+        return v
 
 class UserUpdate(BaseModel):
     full_name: Optional[str] = None
     email: Optional[EmailStr] = None
     password: Optional[str] = None
+    
+    @field_validator('password')
+    @classmethod
+    def validate_password_length(cls, v):
+        if v is not None:
+            if len(v.encode('utf-8')) > 72:
+                raise ValueError('Password must not exceed 72 bytes')
+            if len(v) < 6:
+                raise ValueError('Password must be at least 6 characters')
+        return v
 
 class UserResponse(UserBase):
     id: int
