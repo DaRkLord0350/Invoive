@@ -19,8 +19,7 @@ services:
       - key: CORS_ORIGINS
         scope: SERVICE
     autoDeploy: true
-
-services:
+    
   - type: web
     name: invoice-frontend
     env: static
