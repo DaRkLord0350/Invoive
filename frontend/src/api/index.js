@@ -34,41 +34,41 @@ export const productsAPI = {
 
 // Customers APIs
 export const customersAPI = {
-  list: (params = {}) => api.get(`/customers/`, { params }).then(res => res.data),
-  get: (id) => api.get(`/customers/${id}`).then(res => res.data),
-  create: (data) => api.post(`/customers/`, data).then(res => res.data),
-  update: (id, data) => api.put(`/customers/${id}`, data).then(res => res.data),
-  block: (id) => api.post(`/customers/${id}/block`).then(res => res.data),
-  unblock: (id) => api.post(`/customers/${id}/unblock`).then(res => res.data),
-  getInvoices: (id) => api.get(`/customers/${id}/invoices`).then(res => res.data),
+  list: (params = {}) => api.get(`api/customers/`, { params }).then(res => res.data),
+  get: (id) => api.get(`api/customers/${id}`).then(res => res.data),
+  create: (data) => api.post(`api/customers/`, data).then(res => res.data),
+  update: (id, data) => api.put(`api/customers/${id}`, data).then(res => res.data),
+  block: (id) => api.post(`api/customers/${id}api/block`).then(res => res.data),
+  unblock: (id) => api.post(`api/customers/${id}api/unblock`).then(res => res.data),
+  getInvoices: (id) => api.get(`api/customers/${id}api/invoices`).then(res => res.data),
 };
 
 // Invoices APIs
 export const invoicesAPI = {
-  list: (params = {}) => api.get(`/invoices/`, { params }).then(res => res.data),
-  get: (id) => api.get(`/invoices/${id}`).then(res => res.data),
-  create: (data) => api.post(`/invoices/`, data).then(res => res.data),
-  update: (id, data) => api.put(`/invoices/${id}`, data).then(res => res.data),
-  delete: (id) => api.delete(`/invoices/${id}`).then(res => res.data),
-  addPayment: (id, payment) => api.post(`/invoices/${id}/payment`, payment).then(res => res.data),
-  getPayments: (id) => api.get(`/invoices/${id}/payments`).then(res => res.data),
-  downloadPDF: (id) => api.get(`/invoices/${id}/pdf`, { responseType: 'blob' }),
+  list: (params = {}) => api.get(`api/invoices/`, { params }).then(res => res.data),
+  get: (id) => api.get(`api/invoices/${id}`).then(res => res.data),
+  create: (data) => api.post(`api/invoices/`, data).then(res => res.data),
+  update: (id, data) => api.put(`api/invoices/${id}`, data).then(res => res.data),
+  delete: (id) => api.delete(`api/invoices/${id}`).then(res => res.data),
+  addPayment: (id, payment) => api.post(`api/invoices/${id}api/payment`, payment).then(res => res.data),
+  getPayments: (id) => api.get(`api/invoices/${id}api/payments`).then(res => res.data),
+  downloadPDF: (id) => api.get(`api/invoices/${id}api/pdf`, { responseType: 'blob' }),
 };
 
 // Reports APIs
 export const reportsAPI = {
   salesSummary: (businessId, period = 'daily') => 
-    api.get(`/reports/sales/summary`, { params: { business_id: businessId, period } }).then(res => res.data),
+    api.get(`api/reports/sales/summary`, { params: { business_id: businessId, period } }).then(res => res.data),
   inventoryValue: (businessId) => 
-    api.get(`/reports/inventory/value`, { params: { business_id: businessId } }).then(res => res.data),
+    api.get(`api/reports/inventory/value`, { params: { business_id: businessId } }).then(res => res.data),
   bestsellers: (businessId, period = 'monthly', limit = 10) =>
-    api.get(`/reports/products/bestsellers`, { params: { business_id: businessId, period, limit } }).then(res => res.data),
+    api.get(`api/reports/products/bestsellers`, { params: { business_id: businessId, period, limit } }).then(res => res.data),
   topCustomers: (businessId, limit = 10) =>
-    api.get(`/reports/customers/top`, { params: { business_id: businessId, limit } }).then(res => res.data),
+    api.get(`api/reports/customers/top`, { params: { business_id: businessId, limit } }).then(res => res.data),
   outstandingPayments: (businessId) =>
-    api.get(`/reports/payments/outstanding`, { params: { business_id: businessId } }).then(res => res.data),
+    api.get(`api/reports/payments/outstanding`, { params: { business_id: businessId } }).then(res => res.data),
   taxSummary: (businessId, startDate, endDate) =>
-    api.get(`/reports/tax/summary`, { params: { business_id: businessId, start_date: startDate, end_date: endDate } }).then(res => res.data),
+    api.get(`api/reports/tax/summary`, { params: { business_id: businessId, start_date: startDate, end_date: endDate } }).then(res => res.data),
 };
 
 // Business APIs
