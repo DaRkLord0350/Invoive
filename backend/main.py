@@ -22,17 +22,26 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# Add GZIP middleware for response compression
-app.add_middleware(GZipMiddleware, minimum_size=1000)
 
-# Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.CORS_ORIGINS,
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+# Add CORS middleware
+#app.add_middleware(
+#    CORSMiddleware,
+#    allow_origins=settings.CORS_ORIGINS,
+#    allow_credentials=True,
+#    allow_methods=["*"],
+#    allow_headers=["*"],
+#)
+# Add GZIP middleware for response compression
+app.add_middleware(GZipMiddleware, minimum_size=1000)
 
 # Include routers
 app.include_router(auth.router)
