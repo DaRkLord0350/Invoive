@@ -5,9 +5,15 @@ from config import settings
 from database import Base, engine
 from routes import auth, products, customers, invoices, reports, businesses
 import os
+app = FastAPI()
 
 # Create tables
 Base.metadata.create_all(bind=engine)
+
+#get routes
+@app.get("/__routes__")
+def list_routes():
+    return [{"path": r.path, "methods": list(r.methods)} for r in app.routes]
 
 # Initialize FastAPI app
 app = FastAPI(
