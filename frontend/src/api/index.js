@@ -52,7 +52,7 @@ export const invoicesAPI = {
   delete: (id) => api.delete(`api/invoices/${id}`).then(res => res.data),
   addPayment: (id, payment) => api.post(`api/invoices/${id}api/payment`, payment).then(res => res.data),
   getPayments: (id) => api.get(`api/invoices/${id}api/payments`).then(res => res.data),
-  downloadPDF: (id) => api.get(`api/invoices/${id}api/pdf`, { responseType: 'blob' }),
+  downloadPDF: (id) => api.get(`api/invoices/${id}/pdf`, { responseType: 'blob' }),
 };
 
 // Reports APIs
