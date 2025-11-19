@@ -1,12 +1,11 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 from typing import Optional
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from database import get_db
 import models
 from auth import get_current_active_user
 from sqlalchemy import func
-from datetime import timezone
 
 router = APIRouter(prefix="/api/reports", tags=["Reports"])
 
