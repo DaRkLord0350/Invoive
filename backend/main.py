@@ -5,7 +5,7 @@ from config import settings
 from database import Base, engine
 from routes import auth, products, customers, invoices, reports, businesses
 import os
-app = FastAPI()
+#app = FastAPI()
 
 # Create tables
 Base.metadata.create_all(bind=engine)
