@@ -24,6 +24,7 @@ const ProtectedRoute = ({ children }) => {
   return token ? children : <Navigate to="/login" />;
 };
 
+
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { token } = useAuthStore();
